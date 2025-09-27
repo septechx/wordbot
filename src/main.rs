@@ -17,11 +17,19 @@ async fn himalahiafy(
 
     let word_count = himalahia_level_to_word_count(level);
 
-    sqlx::query("INSERT INTO word_limit (user_id, word_limit) VALUES (?, ?)")
+    if sqlx::query("INSERT INTO word_limit (user_id, word_limit) VALUES (?, ?)")
         .bind(u.id.get() as i64)
         .bind(word_count)
         .execute(&ctx.data().db)
-        .await?;
+        .await
+        .is_err()
+    {
+        sqlx::query("UPDATE word_limit SET word_limit = ? WHERE user_id = ?")
+            .bind(word_count)
+            .bind(u.id.get() as i64)
+            .execute(&ctx.data().db)
+            .await?;
+    };
 
     let response = format!("{} now is himalahia level 🏔️{}!", u.name, level);
 
