@@ -23,10 +23,7 @@ async fn himalahiafy(
         .execute(&ctx.data().db)
         .await?;
 
-    let response = format!(
-        "{} now is himalahia level 🏔️{}! ({} max words)",
-        u.name, level, word_count
-    );
+    let response = format!("{} now is himalahia level 🏔️{}!", u.name, level);
 
     ctx.reply(response).await?;
 
