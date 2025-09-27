@@ -1,0 +1,4 @@
+CREATE TABLE IF NOT EXISTS word_limit (
+    user_id INTEGER UNIQUE NOT NULL,
+    word_limit INTEGER NOT NULL
+)
