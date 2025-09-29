@@ -41,7 +41,12 @@ async fn himalahiafy(
 fn himalahia_level_to_word_count(level: u32) -> u32 {
     // x -> 0 = 1024; x -> ∞ = 3
     // f(x)\=\frac{1021}{\left(x+1\right)^{2}}+3
-    1021 / ((level + 1).pow(2)) + 3
+
+    let max = 1024;
+    let min = 3;
+    let decay = 2;
+
+    (max - min) / ((level + 1).pow(decay)) + min
 }
 
 #[tokio::main]
